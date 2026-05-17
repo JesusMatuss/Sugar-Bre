@@ -67,7 +67,20 @@ function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida
     document.getElementById(`img-${prodId}`).src = `imagenes/${toppingId}.webp`;
 }
 
-function filtrarProductos(categoria) {
+function filtrarProductos(categoria, btn) {
+    // Manejo de clases para highlight de botones
+    const botones = document.querySelectorAll('.cat-btn');
+    botones.forEach(b => {
+        b.classList.remove('bg-amber-950', 'text-white');
+        b.classList.add('bg-amber-100', 'text-amber-950', 'hover:bg-amber-200');
+    });
+    
+    // Aplicar estilo al botón activo
+    if (btn) {
+        btn.classList.add('bg-amber-950', 'text-white');
+        btn.classList.remove('bg-amber-100', 'text-amber-950', 'hover:bg-amber-200');
+    }
+
     const contenedor = document.getElementById('catalogo');
     if (categoria === 'todos') {
         renderizarProductos(productosData);
@@ -237,26 +250,27 @@ async function procesarPago() {
             body: 'data=' + encodeURIComponent(JSON.stringify(pedidos))
         });
 
-    const total = carritoArray.reduce((sum, p) => sum + (p.precio * p.cantidad), 0).toFixed(2);
-    const productosParaResumen = [...carritoArray];
-    
-    // Llamar a la función de WhatsApp antes de limpiar el carrito
-    enviarPedidoWhatsApp(total, productosParaResumen);
+        // Mostrar resumen en lugar de alerta
+        const total = carritoArray.reduce((sum, p) => sum + (p.precio * p.cantidad), 0).toFixed(2);
+        const productosParaResumen = [...carritoArray];
+        
+        // Llamar a la función de WhatsApp antes de limpiar el carrito
+        enviarPedidoWhatsApp(total, productosParaResumen);
 
-    mostrarResumenPedido(total, productosParaResumen);
-    
-    carritoArray = [];
-    document.getElementById('cart-count').innerText = "0";
-    cerrarCarrito();
-} catch (error) {
-    console.error("Error enviando el pedido:", error);
-    alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
-} finally {
-    // Restaurar botón
-    btn.disabled = false;
-    btn.innerText = 'Finalizar Pedido';
-    btn.classList.remove('opacity-70', 'cursor-not-allowed');
-}
+        mostrarResumenPedido(total, productosParaResumen);
+        
+        carritoArray = [];
+        document.getElementById('cart-count').innerText = "0";
+        cerrarCarrito();
+    } catch (error) {
+        console.error("Error enviando el pedido:", error);
+        alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
+    } finally {
+        // Restaurar botón
+        btn.disabled = false;
+        btn.innerText = 'Finalizar Pedido';
+        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+    }
 }
 
 function enviarPedidoWhatsApp(total, productos) {
