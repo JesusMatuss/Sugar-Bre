@@ -2,11 +2,16 @@ let productosData = [];
 let carritoArray = [];
 
 async function cargarProductos() {
+    const contenedor = document.getElementById('catalogo');
     try {
         const respuesta = await fetch('./catalogo.json');
+        if (!respuesta.ok) throw new Error(`HTTP error! status: ${respuesta.status}`);
         productosData = await respuesta.json();
         renderizarProductos(productosData);
-    } catch(e) { console.error("Error cargando productos:", e); }
+    } catch(e) { 
+        console.error("Error cargando productos:", e); 
+        contenedor.innerHTML = `<p class="text-red-500 font-bold p-6">Error al cargar el catálogo: ${e.message}. Por favor revisa la consola.</p>`;
+    }
 }
 
 function renderizarProductos(productos) {
@@ -14,46 +19,59 @@ function renderizarProductos(productos) {
     contenedor.innerHTML = productos.map(p => {
         const t = p.toppings[0];
         return `
-        <div class="bg-white p-6 rounded-2xl border border-stone-100 shadow-sm flex flex-col">
-            <div class="w-full h-40 bg-stone-200 rounded-xl mb-4 flex items-center justify-center text-stone-500 overflow-hidden">
-                <img id="img-${p.id}" src="imagenes/${t.id}.webp" alt="${p.producto}" class="w-full h-full object-cover" onerror="this.src='imagenes/placeholder.jpg'">
+        <div class="bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex flex-col relative">
+            <!-- Etiqueta de cantidad sobre la imagen -->
+            <div class="absolute top-6 left-6 z-10 bg-amber-950 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
+                ${t.unidades_pqte || '0'} unds.
             </div>
-            
-            <h3 class="font-bold text-lg text-stone-800">${p.producto}</h3>
-            <p class="text-xs text-stone-500 mb-1 font-semibold">${p.especificacion}</p>
-            <p class="text-xs text-stone-500 mb-2" id="info-${p.id}">
-                Topping: ${t.nombre} ${t.peso_gr ? `| Peso: ${t.peso_gr}gr` : ''} ${t.medida_cm ? `| Medida: ${t.medida_cm}cm` : ''}
-            </p>
-            
-            <div class="mt-3 flex flex-wrap gap-2" id="select-${p.id}">
-                ${p.toppings.map((t, index) => 
-                    `<button type="button" 
-                             class="px-3 py-1 text-xs font-bold rounded-full border border-marron-claro ${index === 0 ? 'bg-marron-claro text-white' : 'text-marron-oscuro hover:bg-marron-claro hover:text-white'}"
-                             onclick="seleccionarTopping(this, '${p.id}', '${t.nombre}', ${t.precio}, '${t.id}', '${t.peso_gr || ''}', '${t.medida_cm || ''}')"
-                             data-topping="${t.nombre}" data-precio="${t.precio}" data-peso="${t.peso_gr || '0'}">
-                        ${t.nombre}
-                    </button>`
-                ).join('')}
+            <!-- Etiqueta de peso sobre la imagen -->
+            <div class="absolute top-6 right-6 z-10 bg-amber-700 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
+                ${t.peso_gr || '0'} gr.
             </div>
 
-            <p class="text-amber-700 font-bold text-xl mt-3" id="precio-${p.id}">
-                $${t.precio.toFixed(2)}
-            </p>
-            
-            <div class="mt-2 flex items-center gap-2">
-                <label class="text-xs text-stone-500 font-bold">Cantidad:</label>
-                <input type="number" id="cantidad-${p.id}" value="1" min="1" class="w-16 p-1 border border-stone-200 rounded text-center">
+            <div class="w-full h-40 bg-stone-200 rounded-xl mb-4 flex items-center justify-center text-stone-500 overflow-hidden cursor-pointer" onclick="abrirDetalleProducto('${p.id}')">
+                <img id="img-${p.id}" src="imagenes/${t.id}.webp" alt="${p.producto}" class="w-full h-full object-cover transition-transform hover:scale-105" onerror="this.src='imagenes/placeholder.jpg'">
             </div>
+            
+            <h3 class="font-bold text-lg text-stone-800 leading-tight">${p.producto}</h3>
+            <p class="text-xs text-amber-800 bg-amber-100 inline-block px-2 py-0.5 rounded-full mt-1 mb-2 font-bold">${p.especificacion}</p>
+            
+            <div class="text-xs text-stone-600 space-y-1 mb-3" id="info-${p.id}">
+                <p><i class="fas fa-bread-slice text-amber-800"></i> <strong>Topping:</strong> ${t.nombre}</p>
+                <p><i class="fas fa-ruler-horizontal text-amber-800"></i> <strong>Medida:</strong> ${t.medida_cm || 'N/A'}cm</p>
+            </div>
+            
+            <div class="mt-auto">
+                <div class="flex flex-wrap gap-1.5" id="select-${p.id}">
+                    ${p.toppings.map((t, index) => 
+                        `<button type="button" 
+                                 class="px-2 py-1 text-[10px] font-bold rounded-md border border-marron-claro ${index === 0 ? 'bg-marron-claro text-white' : 'text-marron-oscuro hover:bg-marron-claro hover:text-white'}"
+                                 onclick="seleccionarTopping(this, '${p.id}', '${t.nombre}', ${t.precio}, '${t.id}', '${t.peso_gr || ''}', '${t.medida_cm || ''}', '${t.unidades_pqte || ''}')"
+                                 data-topping="${t.nombre}" data-precio="${t.precio}" data-peso="${t.peso_gr || '0'}" data-unidades="${t.unidades_pqte || '0'}">
+                            ${t.nombre}
+                        </button>`
+                    ).join('')}
+                </div>
 
-            <button onclick="agregarAlCarrito('${p.id}')" 
-                    class="mt-4 w-full bg-amber-950 text-white py-2 rounded-lg font-bold hover:bg-amber-900 transition">
-                Agregar
-            </button>
+                <p class="text-amber-950 font-black text-2xl mt-3" id="precio-${p.id}">
+                    $${t.precio.toFixed(2)}
+                </p>
+                
+                <div class="mt-2 flex items-center gap-2">
+                    <label class="text-xs text-stone-500 font-bold">Cantidad:</label>
+                    <input type="number" id="cantidad-${p.id}" value="1" min="1" class="w-16 p-1 border border-stone-200 rounded text-center text-sm">
+                </div>
+
+                <button onclick="agregarAlCarrito('${p.id}')" 
+                        class="mt-3 w-full bg-amber-950 text-white py-2 rounded-lg font-bold hover:bg-amber-900 transition">
+                    Agregar
+                </button>
+            </div>
         </div>
     `}).join('');
 }
 
-function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida) {
+function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida, unidades) {
     const contenedor = document.getElementById(`select-${prodId}`);
     contenedor.querySelectorAll('button').forEach(b => {
         b.classList.remove('bg-marron-claro', 'text-white');
@@ -63,7 +81,15 @@ function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida
     btn.classList.remove('text-marron-oscuro');
 
     document.getElementById(`precio-${prodId}`).innerText = `$${parseFloat(precio).toFixed(2)}`;
-    document.getElementById(`info-${prodId}`).innerText = `Topping: ${nombre} ${peso ? `| Peso: ${peso}gr` : ''} ${medida ? `| Medida: ${medida}cm` : ''}`;
+    // Actualizar etiquetas sobre imagen
+    const card = btn.closest('.bg-white');
+    card.querySelector('.absolute.top-6.left-6').innerText = (unidades || '0') + ' unds.';
+    card.querySelector('.absolute.top-6.right-6').innerText = (peso || '0') + ' gr.';
+
+    document.getElementById(`info-${prodId}`).innerHTML = `
+        <p><i class="fas fa-bread-slice text-amber-800"></i> <strong>Topping:</strong> ${nombre}</p>
+        <p><i class="fas fa-ruler-horizontal text-amber-800"></i> <strong>Medida:</strong> ${medida || 'N/A'}cm</p>
+    `;
     document.getElementById(`img-${prodId}`).src = `imagenes/${toppingId}.webp`;
 }
 
@@ -360,9 +386,28 @@ function mostrarResumenPedido(total, productos) {
     modal.classList.add('flex');
 }
 
-function cerrarResumen() {
-    document.getElementById('modal-resumen').classList.remove('flex');
-    document.getElementById('modal-resumen').classList.add('hidden');
+function abrirDetalleProducto(id) {
+    const p = productosData.find(prod => prod.id === id);
+    const modal = document.getElementById('modal-detalle-producto');
+    const contenido = document.getElementById('contenido-detalle-producto');
+    
+    contenido.innerHTML = `
+        <img src="imagenes/${p.toppings[0].id}.webp" alt="${p.producto}" class="w-full h-64 object-cover rounded-xl mb-4">
+        <h2 class="text-2xl font-black text-amber-950 mb-1">${p.producto}</h2>
+        <p class="text-sm text-stone-600 mb-4 font-semibold italic">${p.especificacion}</p>
+        <div class="text-stone-700 text-sm space-y-2">
+            <p><strong>Categoría:</strong> ${p.categoria}</p>
+            <p><strong>Toppings disponibles:</strong> ${p.toppings.map(t => t.nombre).join(', ')}</p>
+            <p><strong>Unidades por paquete:</strong> ${p.toppings[0].unidades_pqte || 'N/A'}</p>
+        </div>
+    `;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function cerrarDetalleProducto() {
+    document.getElementById('modal-detalle-producto').classList.remove('flex');
+    document.getElementById('modal-detalle-producto').classList.add('hidden');
 }
 
 function entrarAlCatalogo() {
