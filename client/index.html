@@ -71,13 +71,17 @@
         <!-- Formulario Datos Cliente -->
         <section class="bg-white p-6 rounded-2xl shadow-sm mb-8 border border-stone-100">
             <h2 class="text-xl font-bold mb-4 text-amber-950">Datos para tu pedido</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <input type="text" id="cliente-nombre" placeholder="Nombre completo" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
-                <input type="text" id="cliente-telefono" placeholder="Teléfono" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
-                <input type="date" id="fecha-entrega" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="cliente-nombre" placeholder="Nombre completo" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                    <input type="text" id="cliente-telefono" placeholder="Teléfono" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div class="md:col-span-2">
+                    <label for="fecha-entrega" class="block text-sm font-bold text-stone-700 mb-1">Fecha de entrega:</label>
+                    <input type="date" id="fecha-entrega" class="w-full p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 border border-stone-200">
+                </div>
                 <div class="md:col-span-2 flex items-center gap-2">
                     <input type="checkbox" id="check-delivery" onchange="toggleDireccion()" class="w-5 h-5 accent-amber-600">
-                    <label for="check-delivery" class="text-stone-700">¿Solicitar Delivery?</label>
+                    <label for="check-delivery" class="text-stone-700 font-bold">¿Solicitar Delivery?</label>
                 </div>
                 <div id="campo-direccion" class="hidden md:col-span-2 flex gap-2">
                     <input type="text" id="direccion-texto" placeholder="Dirección de entrega o ubicación GPS" class="flex-grow p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
@@ -105,10 +109,13 @@
         Finalizar Pedido
     </button>
 
-    <!-- Modal Resumen Pedido -->
+        <!-- Modal Resumen Pedido -->
     <div id="modal-resumen" class="hidden fixed inset-0 bg-stone-900 bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-stone-50 rounded-2xl p-6 w-full max-w-sm shadow-xl border border-stone-200">
             <div id="detalle-orden"></div>
+            <button id="btn-cerrar-resumen" class="mt-4 w-full bg-stone-500 text-white py-3 rounded-xl font-bold hover:bg-stone-600 transition" onclick="cerrarResumen()">
+                Entendido, ¡gracias! 🥖
+            </button>
         </div>
     </div>
 

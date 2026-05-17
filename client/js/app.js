@@ -45,7 +45,7 @@ function renderizarProductos(productos) {
                 <div class="flex flex-wrap gap-1.5" id="select-${p.id}">
                     ${p.toppings.map((t, index) => 
                         `<button type="button" 
-                                 class="px-2 py-1 text-[10px] font-bold rounded-md border border-marron-claro ${index === 0 ? 'bg-marron-claro text-white' : 'text-marron-oscuro hover:bg-marron-claro hover:text-white'}"
+                                 class="cat-topping-btn px-2 py-1 text-[10px] font-bold rounded-md border border-marron-claro ${index === 0 ? 'bg-marron-claro text-white' : 'text-marron-oscuro hover:bg-marron-claro hover:text-white'}"
                                  onclick="seleccionarTopping(this, '${p.id}', '${t.nombre}', ${t.precio}, '${t.id}', '${t.peso_gr || ''}', '${t.medida_cm || ''}', '${t.unidades_pqte || ''}')"
                                  data-topping="${t.nombre}" data-precio="${t.precio}" data-peso="${t.peso_gr || '0'}" data-unidades="${t.unidades_pqte || '0'}">
                             ${t.nombre}
@@ -72,8 +72,8 @@ function renderizarProductos(productos) {
 }
 
 function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida, unidades) {
-    const contenedor = document.getElementById(`select-${prodId}`);
-    contenedor.querySelectorAll('button').forEach(b => {
+    const contenedor = btn.closest('.flex-wrap');
+    contenedor.querySelectorAll('.cat-topping-btn').forEach(b => {
         b.classList.remove('bg-marron-claro', 'text-white');
         b.classList.add('text-marron-oscuro');
     });
@@ -81,6 +81,7 @@ function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida
     btn.classList.remove('text-marron-oscuro');
 
     document.getElementById(`precio-${prodId}`).innerText = `$${parseFloat(precio).toFixed(2)}`;
+    
     // Actualizar etiquetas sobre imagen
     const card = btn.closest('.bg-white');
     card.querySelector('.absolute.top-6.left-6').innerText = (unidades || '0') + ' unds.';
@@ -94,14 +95,12 @@ function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida
 }
 
 function filtrarProductos(categoria, btn) {
-    // Manejo de clases para highlight de botones
     const botones = document.querySelectorAll('.cat-btn');
     botones.forEach(b => {
         b.classList.remove('bg-amber-950', 'text-white');
         b.classList.add('bg-amber-100', 'text-amber-950', 'hover:bg-amber-200');
     });
     
-    // Aplicar estilo al botón activo
     if (btn) {
         btn.classList.add('bg-amber-950', 'text-white');
         btn.classList.remove('bg-amber-100', 'text-amber-950', 'hover:bg-amber-200');
@@ -122,7 +121,6 @@ function agregarAlCarrito(id) {
     const btnActivo = contenedor.querySelector('.bg-marron-claro');
     const cantidad = parseInt(document.getElementById(`cantidad-${id}`).value);
     
-    // Obtener peso del topping seleccionado
     const peso = btnActivo ? btnActivo.getAttribute('data-peso') : producto.toppings[0].peso_gr;
     const topping = btnActivo ? btnActivo.getAttribute('data-topping') : producto.toppings[0].nombre;
     const precio = btnActivo ? parseFloat(btnActivo.getAttribute('data-precio')) : producto.toppings[0].precio;
@@ -220,7 +218,6 @@ function obtenerUbicacionGPS() {
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                // Formato de enlace de Google Maps
                 document.getElementById('direccion-texto').value = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
             },
             (error) => {
@@ -238,22 +235,23 @@ async function procesarPago() {
     const telefono = document.getElementById('cliente-telefono').value;
     const fechaEntrega = document.getElementById('fecha-entrega').value;
     const isDelivery = document.getElementById('check-delivery').checked;
-    const direccion = document.getElementById('direccion-texto').value;
+    let direccion = document.getElementById('direccion-texto').value;
+    
+    if (isDelivery && !direccion.trim()) {
+        direccion = "Ubicación por acordar";
+    }
+    
     const deliveryInfo = isDelivery ? ('Sí - ' + direccion) : 'No, retiro en local';
 
-    if (!nombre || !telefono || !fechaEntrega || (isDelivery && !direccion) || carritoArray.length === 0) {
+    if (!nombre || !telefono || !fechaEntrega || carritoArray.length === 0) {
         return alert("Por favor completa todos tus datos y agrega algo al carrito");
     }
 
-    // Activar estado de carga
     btn.disabled = true;
     btn.innerText = 'Procesando...';
     btn.classList.add('opacity-70', 'cursor-not-allowed');
 
-    // Fecha y hora exacta actual
     const fechaPedido = new Date().toLocaleString();
-
-    // Mapeo de productos a lo que espera el Google Apps Script
     const pedidos = carritoArray.map(p => ({
         Cliente: nombre,
         Producto: p.producto,
@@ -269,20 +267,17 @@ async function procesarPago() {
     }));
 
     try {
-        const respuesta = await fetch('https://script.google.com/macros/s/AKfycbwiGk7Hff6dOBnc5iskRrWhrkgoscwOYhKktUWAN1iWtWPwm6QM2hnpr6kQGScXcHdl/exec', {
+        await fetch('https://script.google.com/macros/s/AKfycbwiGk7Hff6dOBnc5iskRrWhrkgoscwOYhKktUWAN1iWtWPwm6QM2hnpr6kQGScXcHdl/exec', {
             method: 'POST',
-            mode: 'no-cors', // Necesario para evitar bloqueos de CORS
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'data=' + encodeURIComponent(JSON.stringify(pedidos))
         });
 
-        // Mostrar resumen en lugar de alerta
         const total = carritoArray.reduce((sum, p) => sum + (p.precio * p.cantidad), 0).toFixed(2);
         const productosParaResumen = [...carritoArray];
         
-        // Llamar a la función de WhatsApp antes de limpiar el carrito
         enviarPedidoWhatsApp(total, productosParaResumen);
-
         mostrarResumenPedido(total, productosParaResumen);
         
         carritoArray = [];
@@ -292,7 +287,6 @@ async function procesarPago() {
         console.error("Error enviando el pedido:", error);
         alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
     } finally {
-        // Restaurar botón
         btn.disabled = false;
         btn.innerText = 'Finalizar Pedido';
         btn.classList.remove('opacity-70', 'cursor-not-allowed');
@@ -336,7 +330,6 @@ function enviarPedidoWhatsApp(total, productos) {
     window.open(urlWhatsApp, '_blank');
 }
 
-
 function mostrarResumenPedido(total, productos) {
     const contenedorResumen = document.getElementById('detalle-orden');
     const modal = document.getElementById('modal-resumen');
@@ -355,7 +348,7 @@ function mostrarResumenPedido(total, productos) {
         <div class="border-2 border-dashed border-stone-300 rounded-xl p-4 bg-white mb-6">
             <h3 class="font-bold text-lg text-stone-800">Orden #${nroOrden}</h3>
             <p class="text-sm text-stone-500 mb-3">📅 Entrega: <strong>${fechaEntrega}</strong></p>
-            <div class="space-y-2 mb-4">
+            <div class="space-y-2 mb-4 max-h-48 overflow-y-auto">
                 ${productos.map(p => `
                     <p class="text-stone-700"><strong>${p.cantidad}x</strong> ${p.producto} <span class="text-xs text-stone-500">(${p.topping}) (${p.especificacion})</span></p>
                 `).join('')}
@@ -375,15 +368,19 @@ function mostrarResumenPedido(total, productos) {
             </ul>
             <p class="text-xs text-stone-500 mt-3 font-semibold">📷 Toma captura de pantalla.</p>
         </div>
-
-        <button class="w-full bg-stone-500 text-white py-3 rounded-xl font-bold hover:bg-stone-600 transition" onclick="cerrarResumen()">
-            Entendido, ¡gracias! 🥖
-        </button>
     `;
 
     contenedorResumen.innerHTML = htmlProductos;
     modal.classList.remove('hidden');
     modal.classList.add('flex');
+    modal.style.display = 'flex';
+}
+
+function cerrarResumen() {
+    const modal = document.getElementById('modal-resumen');
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
 }
 
 function abrirDetalleProducto(id) {
@@ -417,6 +414,14 @@ function entrarAlCatalogo() {
 function inicializarFormulario() {
     const nombreInput = document.getElementById('cliente-nombre');
     const telefonoInput = document.getElementById('cliente-telefono');
+    const fechaInput = document.getElementById('fecha-entrega');
+    
+    // Configurar fecha mínima (hoy)
+    const hoy = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', hoy);
+    
+    // Si no hay fecha, poner hoy por defecto
+    if (!fechaInput.value) fechaInput.value = hoy;
     
     // Cargar datos si existen
     if (localStorage.getItem('cliente-nombre')) nombreInput.value = localStorage.getItem('cliente-nombre');
@@ -427,7 +432,24 @@ function inicializarFormulario() {
     telefonoInput.addEventListener('input', (e) => localStorage.setItem('cliente-telefono', e.target.value));
 }
 
+function deshabilitarPanDePapa() {
+    const ahora = new Date();
+    const hora = ahora.getHours();
+    
+    // Más de las 8am hasta las 2pm (8 <= hora < 14)
+    if (hora >= 8 && hora < 14) {
+        const botonesPan = document.querySelectorAll('button[onclick*="Pan de Papa"]');
+        botonesPan.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-stone-300');
+            btn.classList.remove('bg-amber-100', 'hover:bg-amber-200');
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     inicializarFormulario();
+    // Ejecutar lógica de deshabilite tras cargar productos
+    setTimeout(deshabilitarPanDePapa, 500); 
 });
