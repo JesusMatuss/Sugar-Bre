@@ -1,0 +1,355 @@
+[
+  {
+    "id": "mini-hamburguesa",
+    "producto": "Mini Hamburguesa",
+    "categoria": "Hamburguesa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 5.61, "id": "HB-SM-01", "medida_cm": "8", "peso_gr": "50" },
+      { "nombre": "Sésamo Negro", "precio": 7.08, "id": "HB-SM-03", "medida_cm": "8", "peso_gr": "50" }
+    ]
+  },
+  {
+    "id": "hamburguesa-pequena-s",
+    "producto": "Hamburguesa pequeña S",
+    "categoria": "Hamburguesa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.27, "id": "HB-SM-06-N1", "medida_cm": "11", "peso_gr": "60" },
+      { "nombre": "AJON/SESAMO", "precio": 4.32, "id": "HB-SM-06-N5", "medida_cm": "11", "peso_gr": "60" }
+    ]
+  },
+  {
+    "id": "hamburguesa-pequena",
+    "producto": "Hamburguesa pequeña",
+    "categoria": "Hamburguesa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.83, "id": "HB-SM-04", "medida_cm": "11", "peso_gr": "70" },
+      { "nombre": "Orégano", "precio": 4.11, "id": "HB-SM-05", "medida_cm": "11", "peso_gr": "70" },
+      { "nombre": "Sésamo Negro", "precio": 4.84, "id": "HB-SM-06", "medida_cm": "11", "peso_gr": "70" },
+      { "nombre": "AJON/OREG", "precio": 4.11, "id": "HB-SM-06-N1-70", "medida_cm": "11", "peso_gr": "70" },
+      { "nombre": "AJON/SESAMO", "precio": 4.84, "id": "HB-SM-06-N2-70", "medida_cm": "11", "peso_gr": "70" }
+    ]
+  },
+  {
+    "id": "hamburguesa-mediana",
+    "producto": "Hamburguesa Mediana",
+    "categoria": "Hamburguesa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.53, "id": "HB-SM-07", "medida_cm": "12", "peso_gr": "90" },
+      { "nombre": "Orégano", "precio": 3.8, "id": "HB-SM-08", "medida_cm": "12", "peso_gr": "90" },
+      { "nombre": "Sésamo Negro", "precio": 4.45, "id": "HB-SM-09", "medida_cm": "12", "peso_gr": "90" },
+      { "nombre": "AJON/OREG", "precio": 3.8, "id": "HB-SM-09-N1", "medida_cm": "12", "peso_gr": "90" },
+      { "nombre": "AJON/SESAMO", "precio": 4.45, "id": "HB-SM-09-N2", "medida_cm": "12", "peso_gr": "90" }
+    ]
+  },
+  {
+    "id": "hamburguesa-grande",
+    "producto": "Hamburguesa Grande",
+    "categoria": "Hamburguesa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.81, "id": "HB-SM-10", "medida_cm": "13", "peso_gr": "110" },
+      { "nombre": "Orégano", "precio": 3.01, "id": "HB-SM-11", "medida_cm": "13", "peso_gr": "110" },
+      { "nombre": "Sésamo Negro", "precio": 3.38, "id": "HB-SM-12", "medida_cm": "13", "peso_gr": "110" },
+      { "nombre": "AJON/OREG", "precio": 3.01, "id": "HB-SM-12-N1", "medida_cm": "13", "peso_gr": "110" },
+      { "nombre": "AJON/SESAMO", "precio": 3.38, "id": "HB-SM-12-N2", "medida_cm": "13", "peso_gr": "110" }
+    ]
+  },
+  {
+    "id": "hamburguesa-mediana-m",
+    "producto": "Hamburguesa Mediana M",
+    "categoria": "Hamburguesa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.78, "id": "HB-CM-01", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "Orégano", "precio": 4, "id": "HB-CM-02", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "Sésamo Negro", "precio": 4.59, "id": "HB-CM-03", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "AJON/OREG", "precio": 4, "id": "HB-CM-03-N1", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "AJON/SESAMO", "precio": 4.59, "id": "HB-CM-03-N2", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "MIXTO", "precio": 4.59, "id": "HB-CM-03-N3", "medida_cm": "11", "peso_gr": "90" }
+    ]
+  },
+  {
+    "id": "hamburguesa-mediana-trenzada",
+    "producto": "Hamburguesa Mediana Trenzada",
+    "categoria": "Hamburguesa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.78, "id": "HB-CMT-01", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "Orégano", "precio": 4, "id": "HB-CMT-02", "medida_cm": "11", "peso_gr": "90" },
+      { "nombre": "Sésamo Negro", "precio": 4.59, "id": "HB-CMT-03", "medida_cm": "11", "peso_gr": "90" }
+    ]
+  },
+  {
+    "id": "hamburguesa-grande-m",
+    "producto": "Hamburguesa Grande M",
+    "categoria": "Hamburguesa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.71, "id": "HB-CM-04", "medida_cm": "11", "peso_gr": "110" },
+      { "nombre": "Orégano", "precio": 3.89, "id": "HB-CM-05", "medida_cm": "11", "peso_gr": "110" },
+      { "nombre": "Sésamo Negro", "precio": 4.46, "id": "HB-CM-06", "medida_cm": "11", "peso_gr": "110" },
+      { "nombre": "AJON/OREG", "precio": 3.89, "id": "HB-CM-06-N1", "medida_cm": "11", "peso_gr": "110" },
+      { "nombre": "AJON/SESAMO", "precio": 4.46, "id": "HB-CM-06-N2", "medida_cm": "11", "peso_gr": "110" },
+      { "nombre": "MIXTO", "precio": 4.46, "id": "HB-CM-06-N3", "medida_cm": "11", "peso_gr": "110" }
+    ]
+  },
+  {
+    "id": "hamburguesa-extra-grande-m",
+    "producto": "Hamburguesa Extra Grande M",
+    "categoria": "Hamburguesa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.39, "id": "HB-CM-07", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "Orégano", "precio": 3.45, "id": "HB-CM-08", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "Sésamo Negro", "precio": 3.86, "id": "HB-CM-09", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "AJON/OREG", "precio": 3.45, "id": "HB-CM-09-N1", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "AJON/SESAMO", "precio": 3.86, "id": "HB-CM-09-N2", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "MIXTO", "precio": 3.86, "id": "HB-CM-09-N3", "medida_cm": "13", "peso_gr": "120" }
+    ]
+  },
+  {
+    "id": "hamburguesa-extra-grande-trenzada",
+    "producto": "Hamburguesa Extra Grande Trenzada",
+    "categoria": "Hamburguesa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.39, "id": "HB-CMT-E01", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "Orégano", "precio": 3.45, "id": "HB-CMT-E02", "medida_cm": "13", "peso_gr": "120" },
+      { "nombre": "Sésamo Negro", "precio": 3.86, "id": "HB-CMT-E03", "medida_cm": "13", "peso_gr": "120" }
+    ]
+  },
+  {
+    "id": "perro-comercial-e",
+    "producto": "Perro Comercial E",
+    "categoria": "Perro",
+    "especificacion": "Economico",
+    "toppings": [
+      { "nombre": "Sin Topping", "precio": 6, "id": "PC-EST-01", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "perro-comercial-e2",
+    "producto": "Perro Comercial E2",
+    "categoria": "Perro",
+    "especificacion": "Economico",
+    "toppings": [
+      { "nombre": "Sin Topping", "precio": 2.5, "id": "PC-ESTT", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "mini-perros",
+    "producto": "Mini Perros",
+    "categoria": "Perro",
+    "especificacion": "Regular",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.6, "id": "PC-Mini", "medida_cm": "12" }
+    ]
+  },
+  {
+    "id": "perro-comercial",
+    "producto": "Perro Comercial",
+    "categoria": "Perro",
+    "especificacion": "Regular",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 9.36, "id": "PC-COM-01", "medida_cm": "16" },
+      { "nombre": "Orégano", "precio": 10.44, "id": "PC-COM-02", "medida_cm": "16" },
+      { "nombre": "Sésamo Negro", "precio": 12.93, "id": "PC-COM-03", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "perro-comercial-m",
+    "producto": "Perro Comercial M",
+    "categoria": "Perro",
+    "especificacion": "Pesado",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.9, "id": "PC-COM-04", "medida_cm": "16" },
+      { "nombre": "Orégano", "precio": 4.33, "id": "PC-COM-05", "medida_cm": "16" },
+      { "nombre": "Sésamo Negro", "precio": 4.68, "id": "PC-COM-06", "medida_cm": "16" },
+      { "nombre": "AJON/OREG", "precio": 4.33, "id": "PC-COM-06-N1", "medida_cm": "16" },
+      { "nombre": "AJON/SESAMO", "precio": 4.68, "id": "PC-COM-06-N2", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "perro-comercial-p",
+    "producto": "Perro Comercial P",
+    "categoria": "Perro",
+    "especificacion": "Premiun",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 4.54, "id": "PC-COM-07", "medida_cm": "16" },
+      { "nombre": "Orégano", "precio": 4.96, "id": "PC-COM-08", "medida_cm": "16" },
+      { "nombre": "Sésamo Negro", "precio": 5.68, "id": "PC-COM-09", "medida_cm": "16" },
+      { "nombre": "AJON/OREG", "precio": 4.96, "id": "PC-COM-09-N1", "medida_cm": "16" },
+      { "nombre": "AJON/SESAMO", "precio": 5.68, "id": "PC-COM-09-N2", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "jumbo",
+    "producto": "Jumbo",
+    "categoria": "Perro",
+    "especificacion": "Jumbo",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.29, "id": "PC-JUM-01", "medida_cm": "20" },
+      { "nombre": "Orégano", "precio": 3.95, "id": "PC-JUM-02", "medida_cm": "20" },
+      { "nombre": "Sésamo Negro", "precio": 4.51, "id": "PC-JUM-03", "medida_cm": "20" },
+      { "nombre": "AJON/OREG", "precio": 3.95, "id": "PC-JUM-03-N1", "medida_cm": "20" },
+      { "nombre": "AJON/SESAMO", "precio": 4.51, "id": "PC-JUM-03-N2", "medida_cm": "20" }
+    ]
+  },
+  {
+    "id": "jumbo-extra-g",
+    "producto": "Jumbo Extra G",
+    "categoria": "Perro",
+    "especificacion": "Jumbo",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.29, "id": "PC-JUM-04", "medida_cm": "21" }
+    ]
+  },
+  {
+    "id": "deli-standard",
+    "producto": "Deli Standard",
+    "categoria": "Deli (Pepito)",
+    "especificacion": "Regular",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 1.79, "id": "DL-PEP-01", "medida_cm": "18" },
+      { "nombre": "Orégano", "precio": 2.11, "id": "DL-PEP-02", "medida_cm": "18" },
+      { "nombre": "Sésamo Negro", "precio": 2.48, "id": "DL-PEP-03", "medida_cm": "18" },
+      { "nombre": "AJON/OREG", "precio": 2.11, "id": "DL-PEP-03-N1", "medida_cm": "18" },
+      { "nombre": "AJON/SESAMO", "precio": 2.48, "id": "DL-PEP-03-N2", "medida_cm": "18" },
+      { "nombre": "MIXTO", "precio": 2.48, "id": "DL-PEP-03-N3", "medida_cm": "18" }
+    ]
+  },
+  {
+    "id": "deli-mediano",
+    "producto": "Deli Mediano",
+    "categoria": "Deli (Pepito)",
+    "especificacion": "Largo",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.13, "id": "DL-PEP-04", "medida_cm": "22" },
+      { "nombre": "Orégano", "precio": 2.34, "id": "DL-PEP-05", "medida_cm": "22" },
+      { "nombre": "Sésamo Negro", "precio": 2.79, "id": "DL-PEP-06", "medida_cm": "22" },
+      { "nombre": "AJON/OREG", "precio": 2.34, "id": "DL-PEP-06-N1", "medida_cm": "22" },
+      { "nombre": "AJON/SESAMO", "precio": 2.79, "id": "DL-PEP-06-N2", "medida_cm": "22" },
+      { "nombre": "MIXTO", "precio": 2.79, "id": "DL-PEP-06-N3", "medida_cm": "22" }
+    ]
+  },
+  {
+    "id": "deli-grande",
+    "producto": "Deli Grande",
+    "categoria": "Deli (Pepito)",
+    "especificacion": "Maxi",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.99, "id": "DL-PEP-07", "medida_cm": "30" },
+      { "nombre": "Orégano", "precio": 3.09, "id": "DL-PEP-08", "medida_cm": "30" },
+      { "nombre": "Sésamo Negro", "precio": 3.49, "id": "DL-PEP-09", "medida_cm": "30" },
+      { "nombre": "AJON/OREG", "precio": 3.09, "id": "DL-PEP-09-N1", "medida_cm": "30" },
+      { "nombre": "AJON/SESAMO", "precio": 3.49, "id": "DL-PEP-09-N2", "medida_cm": "30" },
+      { "nombre": "MIXTO", "precio": 3.49, "id": "DL-PEP-09-N3", "medida_cm": "30" }
+    ]
+  },
+  {
+    "id": "deli-baguette",
+    "producto": "Deli Baguette",
+    "categoria": "Deli (Pepito)",
+    "especificacion": "Baguette",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.12, "id": "DL-PEP-10", "medida_cm": "15" },
+      { "nombre": "Orégano", "precio": 2.37, "id": "DL-PEP-11", "medida_cm": "15" },
+      { "nombre": "Sésamo Negro", "precio": 2.62, "id": "DL-PEP-11-SN", "medida_cm": "15" },
+      { "nombre": "AJON/OREG", "precio": 2.37, "id": "DL-PEP-11-N1", "medida_cm": "15" },
+      { "nombre": "AJON/SESAMO", "precio": 2.62, "id": "DL-PEP-11-N2", "medida_cm": "15" },
+      { "nombre": "MIXTO", "precio": 2.62, "id": "DL-PEP-11-N3", "medida_cm": "15" }
+    ]
+  },
+  {
+    "id": "deli-extra-g",
+    "producto": "Deli Extra G",
+    "categoria": "Deli (Pepito)",
+    "especificacion": "Maxi Extra",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.49, "id": "DL-PEP-12", "medida_cm": "30" },
+      { "nombre": "Orégano", "precio": 4.41, "id": "DL-PEP-13", "medida_cm": "30" },
+      { "nombre": "Sésamo Negro", "precio": 4.46, "id": "DL-PEP-14", "medida_cm": "30" },
+      { "nombre": "AJON/OREG", "precio": 4.41, "id": "DL-PEP-14-N1", "medida_cm": "30" },
+      { "nombre": "AJON/SESAMO", "precio": 4.46, "id": "DL-PEP-14-N2", "medida_cm": "30" },
+      { "nombre": "MIXTO", "precio": 4.46, "id": "DL-PEP-14-N3", "medida_cm": "30" }
+    ]
+  },
+  {
+    "id": "bimbo",
+    "producto": "Bimbo",
+    "categoria": "Sándwich",
+    "especificacion": "Familiar",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.1, "id": "SW-BIM-01", "medida_cm": "30" },
+      { "nombre": "Orégano", "precio": 2.31, "id": "SW-BIM-02", "medida_cm": "30" },
+      { "nombre": "Sésamo Negro", "precio": 2.53, "id": "SW-BIM-03", "medida_cm": "30" },
+      { "nombre": "AJON/OREG", "precio": 2.31, "id": "SW-BIM-03-N1", "medida_cm": "30" },
+      { "nombre": "AJON/SESAMO", "precio": 2.53, "id": "SW-BIM-03-N2", "medida_cm": "30" },
+      { "nombre": "MIXTO", "precio": 2.53, "id": "SW-BIM-03-N3", "medida_cm": "30" }
+    ]
+  },
+  {
+    "id": "hamburguesa-pequena-pp",
+    "producto": "Hamburguesa pequeña PP",
+    "categoria": "Pan de Papa",
+    "especificacion": "Sin Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.08, "id": "HB-PP-SM-01", "medida_cm": "11" },
+      { "nombre": "Sésamo Negro", "precio": 2.25, "id": "HB-PP-SM-02", "medida_cm": "11" }
+    ]
+  },
+  {
+    "id": "hamburguesa-pequena-sp",
+    "producto": "Hamburguesa pequeña SP",
+    "categoria": "Pan de Papa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.22, "id": "HB-PP-CM-01", "medida_cm": "11" },
+      { "nombre": "Sésamo Negro", "precio": 2.36, "id": "HB-PP-CM-02", "medida_cm": "11" }
+    ]
+  },
+  {
+    "id": "hamburguesa-mediana-mp",
+    "producto": "Hamburguesa Mediana MP",
+    "categoria": "Pan de Papa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 2.55, "id": "HB-PP-CM-03", "medida_cm": "11" },
+      { "nombre": "Sésamo Negro", "precio": 2.7, "id": "HB-PP-CM-04", "medida_cm": "11" }
+    ]
+  },
+  {
+    "id": "hamburguesa-grande-mp",
+    "producto": "Hamburguesa Grande MP",
+    "categoria": "Pan de Papa",
+    "especificacion": "Con Molde",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3.47, "id": "HB-PP-CM-05", "medida_cm": "13" },
+      { "nombre": "Sésamo Negro", "precio": 3.7, "id": "HB-PP-CM-06", "medida_cm": "13" }
+    ]
+  },
+  {
+    "id": "perro-papa-grande",
+    "producto": "Perro Papa Grande",
+    "categoria": "Pan de Papa",
+    "especificacion": "16CM",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 6.6, "id": "PC-PP-70-01", "medida_cm": "16" },
+      { "nombre": "Sésamo Negro", "precio": 7, "id": "PC-PP-70-02", "medida_cm": "16" }
+    ]
+  },
+  {
+    "id": "perro-papa-mediano",
+    "producto": "Perro Papa Mediano",
+    "categoria": "Pan de Papa",
+    "especificacion": "14.5CM",
+    "toppings": [
+      { "nombre": "Ajonjolí", "precio": 5.22, "id": "PC-PP-55-01", "medida_cm": "14.5" },
+      { "nombre": "Sésamo Negro", "precio": 5.77, "id": "PC-PP-55-02", "medida_cm": "14.5" }
+    ]
+  }
+]

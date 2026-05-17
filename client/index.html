@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarBread App | Pedidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'marron-claro': '#fcd34d', // amber-300
+                        'marron-oscuro': '#78350f', // amber-900
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-stone-50">
+    <!-- Pantalla de Bienvenida -->
+    <div id="pantalla-bienvenida" class="fixed inset-0 bg-stone-50 z-50 flex flex-col items-center justify-center p-6 text-center">
+        <img src="imagenes/Logo.png" alt="Logo" class="w-32 h-32 rounded-full object-cover border-4 border-amber-900 mb-6 shadow-lg">
+        <h1 class="text-4xl font-black text-amber-900 italic mb-2">SugarBread</h1>
+        <p class="text-xl font-bold text-amber-950 mb-2">Realiza tu pedido de forma rápida y fácil</p>
+        <p class="text-stone-600 mb-8 max-w-sm">Aquí en SugarBread lo hacemos con amor para que disfrutes lo mejor de nuestro pan.</p>
+        <button onclick="entrarAlCatalogo()" class="bg-amber-950 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-amber-900 transition-all text-lg">
+            Comenzar Pedido 🥖
+        </button>
+    </div>
+
+    <header class="bg-white border-b border-stone-200 sticky top-0 z-10 p-4 shadow-sm">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="imagenes/Logo.png" alt="Logo" class="w-16 h-16 rounded-full object-cover border-2 border-amber-900">
+                <h1 class="text-2xl font-black text-amber-900 italic">SugarBread</h1>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="https://www.instagram.com/sugar.bread777/" class="text-amber-900 hover:text-amber-700 text-xl"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100080236285252" class="text-amber-900 hover:text-amber-700 text-xl"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/584126030518" class="text-amber-900 hover:text-amber-700 text-xl"><i class="fab fa-whatsapp"></i></a>
+                <button id="ver-carrito" onclick="abrirCarrito()" class="bg-amber-950 text-white px-5 py-2 rounded-full font-bold shadow-md hover:bg-amber-900 transition">
+                    <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-4 py-8">
+        <!-- Modal Carrito -->
+        <div id="modal-carrito" class="hidden fixed inset-0 bg-stone-900 bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-amber-950">Tu Carrito</h2>
+                    <button onclick="cerrarCarrito()" class="text-stone-500 hover:text-amber-900 text-xl"><i class="fas fa-times"></i></button>
+                </div>
+                <div id="contenido-carrito" class="space-y-4">
+                    <!-- Productos irán aquí -->
+                </div>
+                <div class="border-t mt-4 pt-4 text-right">
+                    <p class="text-xl font-bold text-amber-950" id="total-carrito">Total: $0.00</p>
+                    <button onclick="procesarPago()" class="mt-4 bg-amber-600 text-white w-full py-3 rounded-lg font-bold hover:bg-amber-700 transition">
+                        Finalizar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Formulario Datos Cliente -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm mb-8 border border-stone-100">
+            <h2 class="text-xl font-bold mb-4 text-amber-950">Datos para tu pedido</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <input type="text" id="cliente-nombre" placeholder="Nombre completo" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                <input type="text" id="cliente-telefono" placeholder="Teléfono" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                <input type="date" id="fecha-entrega" class="p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                <div class="md:col-span-2 flex items-center gap-2">
+                    <input type="checkbox" id="check-delivery" onchange="toggleDireccion()" class="w-5 h-5 accent-amber-600">
+                    <label for="check-delivery" class="text-stone-700">¿Solicitar Delivery?</label>
+                </div>
+                <div id="campo-direccion" class="hidden md:col-span-2 flex gap-2">
+                    <input type="text" id="direccion-texto" placeholder="Dirección de entrega o ubicación GPS" class="flex-grow p-3 bg-stone-50 rounded-lg outline-none focus:ring-2 focus:ring-amber-500">
+                    <button type="button" onclick="obtenerUbicacionGPS()" class="bg-amber-900 text-white px-4 py-2 rounded-lg hover:bg-amber-800">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filtros de Categoría -->
+        <section class="mb-6 flex gap-2 overflow-x-auto pb-2">
+            <button onclick="filtrarProductos('todos')" class="bg-amber-950 text-white px-4 py-2 rounded-lg font-bold">Todos</button>
+            <button onclick="filtrarProductos('Hamburguesa')" class="bg-amber-100 text-amber-950 px-4 py-2 rounded-lg font-bold">Hamburguesas</button>
+            <button onclick="filtrarProductos('Perro')" class="bg-amber-100 text-amber-950 px-4 py-2 rounded-lg font-bold">Perros</button>
+            <button onclick="filtrarProductos('Pan de Papa')" class="bg-amber-100 text-amber-950 px-4 py-2 rounded-lg font-bold">Pan de Papa</button>
+        </section>
+
+        <!-- Catálogo -->
+        <div id="catalogo" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- Botón Pagar -->
+    <button id="btn-finalizar" onclick="procesarPago()" class="fixed bottom-6 right-6 bg-amber-600 text-white px-8 py-4 rounded-full font-bold shadow-2xl hover:scale-105 transition-all">
+        Finalizar Pedido
+    </button>
+
+    <!-- Modal Resumen Pedido -->
+    <div id="modal-resumen" class="hidden fixed inset-0 bg-stone-900 bg-opacity-50 z-50 items-center justify-center p-4">
+        <div class="bg-stone-50 rounded-2xl p-6 w-full max-w-sm shadow-xl border border-stone-200">
+            <div id="detalle-orden"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-24 right-6 z-50 bg-amber-950 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 transform translate-y-16 opacity-0 pointer-events-none">
+        Producto agregado al carrito
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
