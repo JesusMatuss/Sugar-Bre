@@ -328,6 +328,15 @@
     "categoria": "Pan de Papa",
     "especificacion": "Con Molde",
     "toppings": [
+      { "nombre": "Ajonjolí", "precio": 3, "id": "HB-PP-CM-07", "medida_cm": "11", "peso_gr": "110", "unidades_pqte": "6" }
+    ]
+  },
+  {
+    "id": "hamburguesa-extra-grande-mp",
+    "producto": "Hamburguesa Extra Grande MP",
+    "categoria": "Pan de Papa",
+    "especificacion": "Con Molde",
+    "toppings": [
       { "nombre": "Ajonjolí", "precio": 3.47, "id": "HB-PP-CM-05", "medida_cm": "13", "peso_gr": "120", "unidades_pqte": "6" },
       { "nombre": "Sésamo Negro", "precio": 3.7, "id": "HB-PP-CM-06", "medida_cm": "13", "peso_gr": "120", "unidades_pqte": "6" }
     ]
