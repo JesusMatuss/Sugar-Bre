@@ -1,5 +1,11 @@
 let productosData = [];
 let carritoArray = [];
+let categoriaActual = 'todos';
+
+function panDePapaRestringido() {
+    const hora = new Date().getHours();
+    return hora >= 8 && hora < 14;
+}
 
 async function cargarProductos() {
     const contenedor = document.getElementById('catalogo');
@@ -7,7 +13,12 @@ async function cargarProductos() {
         const respuesta = await fetch('./catalogo.json');
         if (!respuesta.ok) throw new Error(`HTTP error! status: ${respuesta.status}`);
         productosData = await respuesta.json();
-        renderizarProductos(productosData);
+        
+        let productosIniciales = productosData;
+        if (panDePapaRestringido()) {
+            productosIniciales = productosData.filter(p => p.categoria !== 'Pan de Papa');
+        }
+        renderizarProductos(productosIniciales);
     } catch(e) { 
         console.error("Error cargando productos:", e); 
         contenedor.innerHTML = `<p class="text-red-500 font-bold p-6">Error al cargar el catálogo: ${e.message}. Por favor revisa la consola.</p>`;
@@ -95,6 +106,8 @@ function seleccionarTopping(btn, prodId, nombre, precio, toppingId, peso, medida
 }
 
 function filtrarProductos(categoria, btn) {
+    categoriaActual = categoria;
+    
     const botones = document.querySelectorAll('.cat-btn');
     botones.forEach(b => {
         b.classList.remove('bg-amber-950', 'text-white');
@@ -106,13 +119,35 @@ function filtrarProductos(categoria, btn) {
         btn.classList.remove('bg-amber-100', 'text-amber-950', 'hover:bg-amber-200');
     }
 
-    const contenedor = document.getElementById('catalogo');
+    let productosAMostrar;
     if (categoria === 'todos') {
-        renderizarProductos(productosData);
+        productosAMostrar = [...productosData];
     } else {
-        const filtrados = productosData.filter(p => p.categoria === categoria);
-        renderizarProductos(filtrados);
+        productosAMostrar = productosData.filter(p => p.categoria === categoria);
     }
+
+    if (panDePapaRestringido()) {
+        productosAMostrar = productosAMostrar.filter(p => p.categoria !== 'Pan de Papa');
+    }
+
+    renderizarProductos(productosAMostrar);
+    actualizarEstadoBotonPanDePapa();
+}
+
+function actualizarEstadoBotonPanDePapa() {
+    const restringido = panDePapaRestringido();
+    const botonesPan = document.querySelectorAll('.cat-btn[onclick*="Pan de Papa"]');
+    botonesPan.forEach(btn => {
+        if (restringido) {
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-stone-300');
+            btn.classList.remove('bg-amber-100', 'hover:bg-amber-200', 'bg-amber-950', 'text-white');
+        } else {
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-stone-300');
+            btn.classList.add('bg-amber-100', 'hover:bg-amber-200');
+        }
+    });
 }
 
 function agregarAlCarrito(id) {
@@ -432,24 +467,34 @@ function inicializarFormulario() {
     telefonoInput.addEventListener('input', (e) => localStorage.setItem('cliente-telefono', e.target.value));
 }
 
-function deshabilitarPanDePapa() {
-    const ahora = new Date();
-    const hora = ahora.getHours();
-    
-    // Más de las 8am hasta las 2pm (8 <= hora < 14)
-    if (hora >= 8 && hora < 14) {
-        const botonesPan = document.querySelectorAll('button[onclick*="Pan de Papa"]');
-        botonesPan.forEach(btn => {
-            btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-stone-300');
-            btn.classList.remove('bg-amber-100', 'hover:bg-amber-200');
-        });
+function verificarRestriccionPanDePapa() {
+    const ahoraRestringido = panDePapaRestringido();
+
+    actualizarEstadoBotonPanDePapa();
+
+    if (ahoraRestringido && categoriaActual === 'Pan de Papa') {
+        const btnTodos = document.querySelector('.cat-btn[onclick*="todos"]');
+        filtrarProductos('todos', btnTodos);
+        return;
     }
+
+    let productosAMostrar;
+    if (categoriaActual === 'todos') {
+        productosAMostrar = [...productosData];
+    } else {
+        productosAMostrar = productosData.filter(p => p.categoria === categoriaActual);
+    }
+
+    if (ahoraRestringido) {
+        productosAMostrar = productosAMostrar.filter(p => p.categoria !== 'Pan de Papa');
+    }
+
+    renderizarProductos(productosAMostrar);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     inicializarFormulario();
-    // Ejecutar lógica de deshabilite tras cargar productos
-    setTimeout(deshabilitarPanDePapa, 500); 
+    setTimeout(actualizarEstadoBotonPanDePapa, 500);
+    setInterval(verificarRestriccionPanDePapa, 30000);
 });
