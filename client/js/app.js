@@ -3,8 +3,25 @@ let carritoArray = [];
 let categoriaActual = 'todos';
 
 function panDePapaRestringido() {
-    const hora = new Date().getHours();
-    return hora >= 8 && hora < 14;
+    const ahora = new Date();
+    const hora = ahora.getHours();
+    const dia = ahora.getDay(); // 0=Dom, 1=Lun, 2=Mar, 3=Mie, 4=Jue, 5=Vie, 6=Sab
+
+    // Restricción de horario de preparación (8 AM - 2 PM)
+    if (hora >= 8 && hora < 14) return true;
+
+    // Días de producción: Lun(1), Mar(2), Jue(4), Vie(5)
+    const diasProduccion = [1, 2, 4, 5];
+    if (!diasProduccion.includes(dia)) return true;
+
+    // Si son más de las 9 AM, la entrega sería al día siguiente
+    if (hora >= 9) {
+        const manana = new Date(ahora);
+        manana.setDate(manana.getDate() + 1);
+        if (!diasProduccion.includes(manana.getDay())) return true;
+    }
+
+    return false;
 }
 
 async function cargarProductos() {
@@ -265,7 +282,7 @@ function obtenerUbicacionGPS() {
 }
 
 async function procesarPago() {
-    const btn = document.getElementById('btn-finalizar');
+    const btns = document.querySelectorAll('.btn-finalizar');
     const nombre = document.getElementById('cliente-nombre').value;
     const telefono = document.getElementById('cliente-telefono').value;
     const fechaEntrega = document.getElementById('fecha-entrega').value;
@@ -282,9 +299,7 @@ async function procesarPago() {
         return alert("Por favor completa todos tus datos y agrega algo al carrito");
     }
 
-    btn.disabled = true;
-    btn.innerText = 'Procesando...';
-    btn.classList.add('opacity-70', 'cursor-not-allowed');
+    btns.forEach(b => { b.disabled = true; b.innerText = 'Procesando...'; b.classList.add('opacity-70', 'cursor-not-allowed'); });
 
     const fechaPedido = new Date().toLocaleString();
     const pedidos = carritoArray.map(p => ({
@@ -322,9 +337,7 @@ async function procesarPago() {
         console.error("Error enviando el pedido:", error);
         alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
     } finally {
-        btn.disabled = false;
-        btn.innerText = 'Finalizar Pedido';
-        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+        btns.forEach(b => { b.disabled = false; b.innerText = 'Finalizar Pedido'; b.classList.remove('opacity-70', 'cursor-not-allowed'); });
     }
 }
 
